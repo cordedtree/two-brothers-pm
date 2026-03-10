@@ -49,9 +49,20 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="mt-8 border-t border-white/10 pt-4 text-xs text-white/30">
-          &copy; {new Date().getFullYear()} {BUSINESS.name}
-        </p>
+        <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-4 text-xs text-white/30 sm:flex-row">
+          <p>&copy; {new Date().getFullYear()} {BUSINESS.name}</p>
+          <p>
+            Made by{" "}
+            <a
+              href="https://originforge.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/50 transition-colors hover:text-white"
+            >
+              Origin Forge
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
