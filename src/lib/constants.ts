@@ -16,7 +16,6 @@ export const SERVICE_AREA = [
   "Johnson County",
   "Morgan County",
   "Breathitt County",
-  "Knott County",
 ] as const;
 
 export interface Service {
