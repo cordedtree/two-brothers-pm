@@ -17,8 +17,8 @@ const serviceImages: Record<string, { src: string; alt: string }> = {
 export default function ServicesPage() {
   return (
     <>
-      {/* Header — image bleed + text overlap */}
-      <div className="relative h-48 md:h-64">
+      {/* Header */}
+      <div className="relative h-64 md:h-80">
         <Image
           src="/images/trimmer-action.jpg"
           alt=""
@@ -28,21 +28,19 @@ export default function ServicesPage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-dark-green/70" />
-      </div>
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="-mt-12 md:-mt-16">
-          <Reveal>
-            <div className="inline-block bg-warm-white px-6 py-4 md:px-8 md:py-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-field-green">Services</p>
-              <h1 className="mt-1 font-heading text-3xl text-dark-green md:text-4xl">
+        <div className="absolute inset-0 flex items-end">
+          <div className="mx-auto w-full max-w-6xl px-4 pb-8 md:pb-12">
+            <Reveal>
+              <p className="text-xs uppercase tracking-[0.2em] text-white/50">Services</p>
+              <h1 className="mt-2 font-heading text-3xl text-white md:text-4xl">
                 What we take on.
               </h1>
-              <p className="mt-2 max-w-md text-slate">
+              <p className="mt-2 max-w-md text-white/70">
                 No contracts. No fine print. You tell us what you need, we tell you
                 what it costs, and we get to work.
               </p>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </div>
 
