@@ -35,6 +35,26 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  openGraph: {
+    title: `${BUSINESS.name} | ${BUSINESS.location}`,
+    description: `Reliable lawn care and property management in ${BUSINESS.location} and surrounding counties. Free estimates.`,
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1024,
+        height: 576,
+        alt: `${BUSINESS.name} - ${BUSINESS.tagline}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${BUSINESS.name} | ${BUSINESS.location}`,
+    description: `Reliable lawn care and property management in ${BUSINESS.location}. Free estimates.`,
+    images: ["/images/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({
