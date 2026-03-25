@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "command": "if echo $CLAUDE_FILE_PATH | grep -q '\\.lock\\|package-lock'; then echo 'BLOCKED: Do not edit lock files. Run npm install instead.' && exit 1; fi"
+      },
+      {
+        "matcher": "Edit",
+        "command": "if echo $CLAUDE_FILE_PATH | grep -q 'node_modules/'; then echo 'BLOCKED: Do not edit node_modules.' && exit 1; fi"
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "npm run dev",
+      "npm run build",
+      "npm run lint",
+      "npm install",
+      "git status",
+      "git diff",
+      "git log"
+    ],
+    "deny": [
+      "rm -rf",
+      "git push --force",
+      "git reset --hard"
+    ]
+  }
+}

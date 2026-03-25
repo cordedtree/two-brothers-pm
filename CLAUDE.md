@@ -170,3 +170,13 @@ public/
 - Social media links (Facebook, etc.)
 - Blog for SEO (seasonal lawn care tips)
 - Service area interactive map
+
+## Anti-Slop Rules
+
+- Do NOT over-engineer. This is an MVP — resist the urge to add features.
+- Do NOT add features beyond what was asked. Refer to BRAND.md for scope.
+- Do NOT add docstrings or comments to code you didn't change.
+- Do NOT use corporate marketing language. Match the brand voice in BRAND.md: straightforward, warm, local, honest.
+- Do NOT add npm dependencies without explicit approval.
+- Match the existing Tailwind theme colors from globals.css — never hardcode hex values.
+- Keep components simple. No abstract factories for a 6-page static site.
