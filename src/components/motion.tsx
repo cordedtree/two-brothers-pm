@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, type Variants } from "framer-motion";
+import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
 /** Fade + slide up on scroll into view */
@@ -17,6 +17,11 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
@@ -43,11 +48,12 @@ export function StaggerGroup({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const prefersReduced = useReducedMotion();
 
   const container: Variants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: stagger },
+      transition: { staggerChildren: prefersReduced ? 0 : stagger },
     },
   };
 
@@ -81,6 +87,12 @@ export function ZoomImage({
   children: ReactNode;
   className?: string;
 }) {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={`overflow-hidden ${className}`}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={`overflow-hidden ${className}`}
@@ -105,6 +117,15 @@ export function ZoomImage({
 export function DrawLine({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-20px" });
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return (
+      <div className={className}>
+        <div className="h-px w-full bg-field-green/30" />
+      </div>
+    );
+  }
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
@@ -163,6 +184,12 @@ export function Parallax({
   className?: string;
   offset?: number;
 }) {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}

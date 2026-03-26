@@ -1,13 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Phone } from "@phosphor-icons/react";
 import { BUSINESS } from "@/lib/constants";
 
 export function VideoHero() {
+  const prefersReduced = useReducedMotion();
+
+  const animate = (
+    props: { opacity: number; y: number },
+    delay: number
+  ) =>
+    prefersReduced
+      ? { initial: {}, animate: {}, transition: {} }
+      : {
+          initial: { opacity: 0, y: props.y },
+          animate: { opacity: props.opacity, y: 0 },
+          transition: { duration: 0.8, delay },
+        };
+
   return (
-    <section className="relative h-[85vh] min-h-[600px] overflow-hidden bg-dark-green">
-      {/* Video background */}
+    <section className="grain relative h-[85vh] min-h-[600px] overflow-hidden bg-dark-green">
+      {/* Video background — loads immediately since it's above the fold */}
       <video
         autoPlay
         muted
@@ -27,18 +41,14 @@ export function VideoHero() {
         <div className="mx-auto w-full max-w-6xl">
           <motion.p
             className="text-xs uppercase tracking-[0.25em] text-white/40"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            {...animate({ opacity: 1, y: 20 }, 0.2)}
           >
             {BUSINESS.location} &middot; Est. {BUSINESS.founded}
           </motion.p>
 
           <motion.h1
             className="mt-4 max-w-3xl font-heading text-4xl text-white sm:text-5xl md:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            {...animate({ opacity: 1, y: 30 }, 0.4)}
           >
             Your yard.
             <br />
@@ -47,9 +57,7 @@ export function VideoHero() {
 
           <motion.p
             className="mt-5 max-w-lg text-lg text-white/60 md:text-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            {...animate({ opacity: 1, y: 20 }, 0.7)}
           >
             Two brothers. Honest work. Lawn care and property management
             for Eastern Kentucky.
@@ -57,9 +65,7 @@ export function VideoHero() {
 
           <motion.div
             className="mt-8 flex flex-wrap items-center gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            {...animate({ opacity: 1, y: 20 }, 1.0)}
           >
             <a
               href={BUSINESS.phone1Tel}
@@ -89,20 +95,22 @@ export function VideoHero() {
           </motion.div>
 
           {/* Scroll indicator */}
-          <motion.div
-            className="mt-12 flex items-center gap-2 text-xs text-white/30"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-          >
+          {!prefersReduced && (
             <motion.div
-              className="h-8 w-px bg-white/30"
-              animate={{ scaleY: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              style={{ transformOrigin: "top" }}
-            />
-            Scroll
-          </motion.div>
+              className="mt-12 flex items-center gap-2 text-xs text-white/30"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5, duration: 1 }}
+            >
+              <motion.div
+                className="h-8 w-px bg-white/30"
+                animate={{ scaleY: [0, 1, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformOrigin: "top" }}
+              />
+              Scroll
+            </motion.div>
+          )}
         </div>
       </div>
     </section>

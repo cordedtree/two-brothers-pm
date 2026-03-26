@@ -28,3 +28,38 @@ h1, h2, h3, h4 {
   font-family: var(--font-heading);
   font-weight: 400;
 }
+
+/* Focus-visible — accessible keyboard navigation indicator */
+:focus-visible {
+  outline: 2px solid var(--color-field-green);
+  outline-offset: 2px;
+}
+
+/* Remove outline for mouse clicks */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced motion — respect user system preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle grain texture overlay for elevated sections */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
