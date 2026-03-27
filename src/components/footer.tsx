@@ -1,63 +1,106 @@
-import Link from "next/link";
-import { Phone, MapPin } from "@phosphor-icons/react/dist/ssr";
-import { BUSINESS, NAV_LINKS } from "@/lib/constants";
+import Link from 'next/link';
+import Image from 'next/image';
+import { BUSINESS } from '@/lib/constants';
+import { CITIES } from '@/lib/services-data';
 
 export function Footer() {
   return (
-    <footer className="border-t border-dark-green/10 bg-dark-green text-white/80">
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        {/* Two-column: brand left, nav + contact right */}
-        <div className="flex flex-col justify-between gap-8 sm:flex-row">
-          <div className="max-w-xs">
-            <p className="font-heading text-xl text-white">
-              Two Brother&apos;s
+    <footer className="bg-void text-limestone/70 border-t border-copper/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 lg:gap-8">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-3 lg:col-span-1">
+            <Link href="/" className="inline-flex items-center gap-3 mb-4">
+              <Image
+                src="/logo-mark.png"
+                alt={BUSINESS.name}
+                width={40}
+                height={48}
+                className="h-10 w-auto"
+              />
+              <span className="font-heading text-2xl text-chalk font-semibold">Two Brother&apos;s</span>
+            </Link>
+            <p className="text-sm leading-relaxed max-w-xs">
+              {BUSINESS.tagline}. Lawn care and property management
+              across Eastern Kentucky.
             </p>
-            <p className="mt-1 text-sm italic text-white/40">
-              {BUSINESS.tagline}
+            <p className="mt-4 font-mono text-[11px] text-copper">
+              {BUSINESS.status}
             </p>
-            <div className="mt-4 flex items-start gap-2 text-sm">
-              <MapPin size={16} weight="fill" className="mt-0.5 shrink-0 text-white/40" />
-              <span>{BUSINESS.location}</span>
-            </div>
           </div>
 
-          <div className="flex gap-12">
-            {/* Nav */}
-            <nav aria-label="Footer navigation">
-              <ul className="space-y-1.5 text-sm">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="hover:text-white">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+          {/* Services */}
+          <div>
+            <h4 className="font-mono text-[11px] uppercase tracking-[3px] text-copper mb-5">
+              Services
+            </h4>
+            <ul className="space-y-3 text-sm">
+              <li><Link href="/services/lawn-maintenance" className="hover:text-copper transition-colors">Mowing &amp; Edging</Link></li>
+              <li><Link href="/services/lawn-maintenance" className="hover:text-copper transition-colors">Weed Control</Link></li>
+              <li><Link href="/services/lawn-maintenance" className="hover:text-copper transition-colors">Storage Clean-outs</Link></li>
+              <li><Link href="/services/lawn-maintenance" className="hover:text-copper transition-colors">Storm Cleanup</Link></li>
+              <li><Link href="/services/lawn-maintenance" className="hover:text-copper transition-colors">Seasonal Clean-ups</Link></li>
+            </ul>
+          </div>
 
-            {/* Contact */}
-            <div className="space-y-1.5 text-sm">
-              <a href={BUSINESS.phone1Tel} className="flex items-center gap-1.5 hover:text-white">
-                <Phone size={14} weight="fill" />
-                {BUSINESS.phone1}
-              </a>
-              <a href={BUSINESS.phone2Tel} className="flex items-center gap-1.5 hover:text-white">
-                <Phone size={14} weight="fill" />
-                {BUSINESS.phone2}
-              </a>
-            </div>
+          {/* Areas */}
+          <div>
+            <h4 className="font-mono text-[11px] uppercase tracking-[3px] text-copper mb-5">
+              Service Areas
+            </h4>
+            <ul className="space-y-3 text-sm">
+              {CITIES.map((city) => (
+                <li key={city.slug}>
+                  <Link href={`/areas/${city.slug}`} className="hover:text-copper transition-colors">
+                    {city.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-mono text-[11px] uppercase tracking-[3px] text-copper mb-5">
+              Contact
+            </h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a href={`tel:+1${BUSINESS.phone1Raw}`} className="hover:text-copper transition-colors">
+                  {BUSINESS.phone1}
+                </a>
+              </li>
+              <li>
+                <a href={`tel:+1${BUSINESS.phone2Raw}`} className="hover:text-copper transition-colors">
+                  {BUSINESS.phone2}
+                </a>
+              </li>
+              <li>
+                <a href={BUSINESS.social.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-copper transition-colors">
+                  Facebook
+                </a>
+              </li>
+              <li className="font-mono text-[11px] text-sage">
+                {BUSINESS.availability}
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-4 text-xs text-white/30 sm:flex-row">
-          <p>&copy; {new Date().getFullYear()} {BUSINESS.name}</p>
-          <p>
-            Made by{" "}
+      {/* Bottom Bar */}
+      <div className="border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-limestone/40">
+            &copy; {new Date().getFullYear()} {BUSINESS.name}. All rights reserved.
+          </p>
+          <p className="text-xs text-limestone/40">
+            Made by{' '}
             <a
               href="https://originforge.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/50 transition-colors hover:text-white"
+              className="text-copper/60 font-mono hover:text-copper transition-colors"
             >
               Origin Forge
             </a>

@@ -1,64 +1,54 @@
 import type { Metadata } from "next";
-import { DM_Sans, DM_Serif_Display } from "next/font/google";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { BUSINESS } from "@/lib/constants";
-import { getLocalBusinessJsonLd } from "@/lib/json-ld";
+import { Cormorant_Garamond, Syne, Space_Mono } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { MobileCTA } from "@/components/MobileCTA";
+import { FilmGrain } from "@/components/FilmGrain";
+import { JsonLd } from '@/components/JsonLd';
+import { getLocalBusinessSchema } from '@/lib/structured-data';
 
-const dmSans = DM_Sans({
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
-  weight: ["400", "500", "600"],
 });
 
-const dmSerif = DM_Serif_Display({
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  variable: "--font-dm-serif",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
-  weight: "400",
+});
+
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: `${BUSINESS.name} | ${BUSINESS.location}`,
-    template: `%s | ${BUSINESS.name}`,
-  },
-  description: `Reliable lawn care and property management in ${BUSINESS.location} and surrounding counties. Mowing, weed control, storm cleanup, and more. Free estimates.`,
-  keywords: [
-    "lawn care Salyersville KY",
-    "property management Magoffin County",
-    "mowing service Eastern Kentucky",
-    "storm cleanup Salyersville",
-    "weed control Eastern KY",
-    "lawn mowing Magoffin County",
-    "property cleanup Eastern Kentucky",
-  ],
-  icons: {
-    icon: "/favicon.svg",
-  },
+  title: "Two Brother's Property Management | Eastern Kentucky Lawn Care & Property Services",
+  description:
+    "Eastern Kentucky's trusted lawn care and property management. Mowing, weed control, storm cleanup, seasonal maintenance — locally owned in Salyersville, KY. Call or text for a free estimate.",
   metadataBase: new URL("https://twobrotherspm.com"),
   openGraph: {
-    title: `${BUSINESS.name} | ${BUSINESS.location}`,
-    description: `Reliable lawn care and property management in ${BUSINESS.location} and surrounding counties. Free estimates.`,
-    type: "website",
+    title: "Two Brother's Property Management | Eastern Kentucky Lawn Care & Property Services",
+    description:
+      "Eastern Kentucky's trusted lawn care and property management. Mowing, weed control, storm cleanup, seasonal maintenance — locally owned in Salyersville, KY.",
+    url: "https://twobrotherspm.com",
+    siteName: "Two Brother's Property Management",
     locale: "en_US",
-    siteName: BUSINESS.name,
-    images: [
-      {
-        url: "/images/og-image.jpg",
-        width: 1024,
-        height: 576,
-        alt: `${BUSINESS.name} - ${BUSINESS.tagline}`,
-      },
-    ],
+    type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: `${BUSINESS.name} | ${BUSINESS.location}`,
-    description: `Reliable lawn care and property management in ${BUSINESS.location}. Free estimates.`,
-    images: ["/images/og-image.jpg"],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://twobrotherspm.com",
   },
 };
 
@@ -67,28 +57,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = getLocalBusinessJsonLd();
-
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${dmSerif.variable} font-body antialiased`}>
-        {/* Skip to content — accessibility */}
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded focus:bg-dark-green focus:px-4 focus:py-2 focus:text-sm focus:text-white focus:outline-none"
-        >
-          Skip to content
-        </a>
-
+      <body
+        className={`${cormorant.variable} ${syne.variable} ${spaceMono.variable} custom-cursor`}
+      >
+        <a href="#main-content" className="skip-to-content">Skip to main content</a>
+        <JsonLd data={getLocalBusinessSchema()} />
+        <FilmGrain />
         <Header />
-        <main id="main">{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
-
-        {/* JSON-LD structured data for search engines */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <MobileCTA />
       </body>
     </html>
   );
